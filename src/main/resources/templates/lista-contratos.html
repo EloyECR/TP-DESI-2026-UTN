@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Gestión de Contratos</title>
+    <style>
+        body { font-family: sans-serif; padding: 20px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+        th, td { border: 1px solid #ccc; padding: 10px; text-align: left; }
+        th { background-color: #f4f4f4; }
+        .btn-nuevo { background-color: #5cb85c; color: white; padding: 10px 15px; text-decoration: none; border-radius: 4px; display: inline-block; margin-bottom: 15px; }
+        .btn-editar { background-color: #0275d8; color: white; padding: 5px 10px; text-decoration: none; border-radius: 4px; }
+        .btn-eliminar { background-color: #d9534f; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer; }
+        .alert-error { background-color: #f8d7da; color: #721c24; padding: 10px; border: 1px solid #f5c6cb; border-radius: 4px; margin-bottom: 15px; width: fit-content; }
+    </style>
+</head>
+<body>
+<h1>Contratos Vigentes</h1>
+<a th:href="@{/contratos/nuevo}" class="btn-nuevo">Nuevo Contrato</a>
+
+<div th:if="${errorGlobal}" class="alert-error">
+    <strong th:text="${errorGlobal}"></strong>
+</div>
+
+<form th:action="@{/contratos}" method="get" style="margin-bottom: 20px; padding: 15px; background-color: #f9f9f9; border: 1px solid #ddd; border-radius: 4px; display: flex; gap: 15px; align-items: flex-end; flex-wrap: wrap;">
+
+    <div>
+        <label style="display: block; font-weight: bold; margin-bottom: 5px; font-size: 0.9em;">Propiedad:</label>
+        <select name="propiedad" style="padding: 6px;">
+            <option value="">Todas las propiedades</option>
+            <option th:each="p : ${propiedades}"
+                    th:value="${p.id}"
+                    th:text="${p.direccion + ' - ' + p.ciudad + ' (' + p.tipo + ')'}"
+                    th:selected="${p.id == propiedadSelect}"></option>
+        </select>
+    </div>
+
+    <div>
+        <label style="display: block; font-weight: bold; margin-bottom: 5px; font-size: 0.9em;">Inquilino:</label>
+        <select name="inquilino" style="padding: 6px;">
+            <option value="">Todos los inquilinos</option>
+            <option th:each="i : ${inquilinos}"
+                    th:value="${i.id}"
+                    th:text="${i.nombreCompleto}"
+                    th:selected="${i.id == inquilinoSelect}"></option>
+        </select>
+    </div>
+
+    <div>
+        <label style="display: block; font-weight: bold; margin-bottom: 5px; font-size: 0.9em;">Estado:</label>
+        <select name="estadoContrato" style="padding: 6px;">
+            <option value="">Todos los estados</option>
+            <option th:each="e : ${estados}"
+                    th:value="${e}"
+                    th:text="${e}"
+                    th:selected="${e == estadoSelec}"></option>
+        </select>
+    </div>
+
+    <div>
+        <label style="display: block; font-weight: bold; margin-bottom: 5px; font-size: 0.9em;">Fechas:</label>
+        <input type="date" name="fechaDesde" th:value="${fechaDesdeSelec}" style="padding: 6px;" />
+        <input type="date" name="fechaHasta" th:value="${fechaHastaSelec}" style="padding: 6px;" />
+    </div>
+
+
+    <div style="margin-bottom: 2px;">
+        <button type="submit" style="padding: 7px 15px; background-color: #0275d8; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold;">
+            Filtrar
+        </button>
+        <a th:href="@{/contratos}" style="margin-left: 10px; color: #d9534f; text-decoration: none; font-size: 0.9em; font-weight: bold;">Limpiar</a>
+    </div>
+</form>
+
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Propiedad</th>
+        <th>Inquilino</th>
+        <th>Inicio</th>
+        <th>Duración (meses)</th>
+        <th>Importe</th>
+        <th>Vencimiento</th>
+        <th>Estado</th>
+        <th>Acciones</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="c : ${contratos}">
+        <td th:text="${c.id}"></td>
+        <td th:text="${c.propiedad.direccion + ' - ' + c.propiedad.ciudad + ' (' + c.propiedad.tipo + ')'}"></td>
+        <td th:text="${c.inquilino.nombreCompleto}"></td>
+        <td th:text="${#temporals.format(c.fechaInicio, 'dd/MM/yyyy')}"></td>
+        <td th:text="${c.duracionMeses}"></td>
+        <td th:text="${#numbers.formatCurrency(c.importeMensual)}"></td>
+        <td th:text="${c.diaVencimientoMensual}"></td>
+        <td th:text="${c.estado}"></td>
+        <td>
+            <a th:href="@{/contratos/actualizar/{id}(id=${c.id})}" class="btn-editar">Editar</a>
+            <form th:action="@{/contratos/eliminar/{id}(id=${c.id})}" method="get" style="display:inline;">
+                <button type="submit" class="btn-eliminar" onclick="return confirm('¿Eliminar contrato?');">Eliminar</button>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
