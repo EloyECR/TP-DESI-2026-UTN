@@ -1,0 +1,77 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title><span th:text="#{publicacion.editar.titulo}"></span></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" th:href="@{/css/main.css}"/>
+</head>
+<body>
+    <main class="contenedor">
+        <section class="bienvenida">
+            <h1><span th:text="#{empresa}"></span></h1>
+            <p th:text="${formBean.id} ? #{publicacion.editar.titulo} : #{publicacion.registrar.titulo}"></p>
+        </section>
+
+        <form th:action="@{/publicacionEditar}" th:object="${formBean}" method="post">
+            <p th:each="err : ${#fields.errors('global')}" th:text="${err}" class="error"></p>
+            <input type="hidden" th:field="*{id}">
+
+            <table border="0">
+                <tr>
+                    <td><label th:text="#{publicacion.id}"></label></td>
+                    <td><input type="text" th:value="*{id}" readonly /></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td><label th:text="#{publicacion.propiedad}"></label></td>
+                    <td>
+                        <select th:field="*{idPropiedad}" th:disabled="${edicion}">
+                            <option value=""></option>
+                            <option th:each="p : ${allPropiedades}" th:value="${p.id}" th:text="${p.direccion} + ' - ' + ${p.ciudad.nombre}"></option>
+                        </select>
+                        <input th:if="${edicion}" type="hidden" th:field="*{idPropiedad}" />
+                    </td>
+                    <td><p th:if="${#fields.hasErrors('idPropiedad')}" th:errorclass="error" th:errors="*{idPropiedad}"></p></td>
+                </tr>
+                <tr>
+                    <td><label th:text="#{publicacion.precioMensual}"></label></td>
+                    <td><input type="number" th:field="*{precioMensual}" min="0.01" step="0.01" /></td>
+                    <td><p th:if="${#fields.hasErrors('precioMensual')}" th:errorclass="error" th:errors="*{precioMensual}"></p></td>
+                </tr>
+                <tr>
+                    <td><label th:text="#{publicacion.condiciones}"></label></td>
+                    <td><textarea th:field="*{condiciones}" rows="3"></textarea></td>
+                    <td><p th:if="${#fields.hasErrors('condiciones')}" th:errorclass="error" th:errors="*{condiciones}"></p></td>
+                </tr>
+                <tr>
+                    <td><label th:text="#{publicacion.descripcion}"></label></td>
+                    <td><textarea th:field="*{descripcion}" rows="3"></textarea></td>
+                    <td><p th:if="${#fields.hasErrors('descripcion')}" th:errorclass="error" th:errors="*{descripcion}"></p></td>
+                </tr>
+                <tr>
+                    <td><label th:text="#{publicacion.fechaPublicacion}"></label></td>
+                    <td><input type="date" th:field="*{fechaPublicacion}" /></td>
+                    <td><p th:if="${#fields.hasErrors('fechaPublicacion')}" th:errorclass="error" th:errors="*{fechaPublicacion}"></p></td>
+                </tr>
+                <tr th:if="${edicion}">
+                    <td><label th:text="#{publicacion.estado}"></label></td>
+                    <td>
+                        <select th:field="*{estado}">
+                            <option value=""></option>
+                            <option th:each="e : ${allEstados}" th:value="${e}" th:text="${e}"></option>
+                        </select>
+                    </td>
+                    <td><p th:if="${#fields.hasErrors('estado')}" th:errorclass="error" th:errors="*{estado}"></p></td>
+                </tr>
+            </table>
+
+            <table class="botones">
+                <tr>
+                    <td><input type="submit" name="action" value="Aceptar" /></td>
+                    <td><input type="submit" name="action" value="Cancelar" /></td>
+                </tr>
+            </table>
+        </form>
+    </main>
+</body>
+</html>
