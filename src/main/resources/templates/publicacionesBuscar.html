@@ -1,0 +1,102 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title><span th:text="#{publicacion.buscar.titulo}"></span></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" th:href="@{/css/main.css}"/>
+</head>
+<body>
+    <main class="contenedor">
+        <section class="bienvenida">
+            <h1><span th:text="#{empresa}"></span></h1>
+            <p th:text="#{publicacion.buscar.titulo}"></p>
+        </section>
+
+        <p th:if="${error}" th:text="${error}" class="error"></p>
+
+        <form th:action="@{/publicacionesBuscar}" th:object="${formBean}" method="post">
+            <table border="0">
+                <tr>
+                    <td><label th:text="#{publicacion.propiedad}"></label></td>
+                    <td>
+                        <select th:field="*{propiedadId}">
+                            <option value="">Todas</option>
+                            <option th:each="p : ${allPropiedades}" th:value="${p.id}" th:text="${p.direccion} + ' - ' + ${p.ciudad.nombre}"></option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td><label th:text="#{publicacion.ciudad}"></label></td>
+                    <td>
+                        <select th:field="*{ciudadId}">
+                            <option value="">Todas</option>
+                            <option th:each="c : ${allCiudades}" th:value="${c.id}" th:text="${c.nombre}"></option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td><label th:text="#{publicacion.estado}"></label></td>
+                    <td>
+                        <select th:field="*{estado}">
+                            <option value="">Todos</option>
+                            <option th:each="e : ${allEstados}" th:value="${e}" th:text="${e}"></option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td><label th:text="#{publicacion.precioDesde}"></label></td>
+                    <td><input type="number" th:field="*{precioMin}" min="0" step="0.01" /></td>
+                </tr>
+                <tr>
+                    <td><label th:text="#{publicacion.precioHasta}"></label></td>
+                    <td><input type="number" th:field="*{precioMax}" min="0" step="0.01" /></td>
+                </tr>
+            </table>
+
+            <table class="botones">
+                <tr>
+                    <td><input type="submit" name="action" value="Buscar" /></td>
+                    <td><input type="submit" name="action" value="Cancelar" /></td>
+                    <td><input type="submit" name="action" value="Registrar" /></td>
+                </tr>
+            </table>
+
+            <table class="resultados" border="0">
+                <thead>
+                    <tr>
+                        <th><label th:text="#{publicacion.id}"></label></th>
+                        <th><label th:text="#{publicacion.direccion}"></label></th>
+                        <th><label th:text="#{publicacion.ciudad}"></label></th>
+                        <th><label th:text="#{publicacion.precioMensual}"></label></th>
+                        <th><label th:text="#{publicacion.fechaPublicacion}"></label></th>
+                        <th><label th:text="#{publicacion.estado}"></label></th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="p : ${resultados}">
+                        <td th:text="${p.id}"></td>
+                        <td th:text="${p.propiedad == null ? '' : p.propiedad.direccion}"></td>
+                        <td th:text="${p.propiedad == null || p.propiedad.ciudad == null ? '' : p.propiedad.ciudad.nombre}"></td>
+                        <td th:text="${p.precioMensual}"></td>
+                        <td th:text="${p.fechaPublicacion}"></td>
+                        <td th:text="${p.estado}"></td>
+                        <td>
+                            <a th:href="@{/publicacionEditar/{id}(id=${p.id})}" th:text="#{links.editar}"></a>
+                        </td>
+                        <td>
+                            <button type="submit"
+                                    th:formaction="@{/publicacionEditar/delete/{id}(id=${p.id})}"
+                                    formmethod="post"
+                                    onclick="return confirm('Esta seguro que desea eliminar esta publicacion?');"
+                                    th:text="#{links.eliminar}">
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </form>
+    </main>
+</body>
+</html>
