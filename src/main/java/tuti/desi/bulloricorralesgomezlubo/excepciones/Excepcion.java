@@ -2,6 +2,8 @@ package tuti.desi.bulloricorralesgomezlubo.excepciones;
 
 public class Excepcion extends Exception {
 
+	private static final long serialVersionUID = 1L;
+
 	private String atributo;
 
 	public Excepcion() {
