@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HogarYA</title>
+    <link rel="stylesheet" th:href="@{/css/main.css}" />
+</head>
+<body>
+    <main class="contenedor">
+        <section class="bienvenida">
+            <p class="etiqueta">Trabajo Practico Integrador DESI 2026</p>
+            <h1><span th:text="#{empresa}"></span></h1>
+            <p>
+                Sistema web para la gestion de propiedades, publicaciones,
+                contratos y facturacion de la inmobiliaria.
+            </p>
+        </section>
+
+        <section class="menu" aria-label="Menu principal">
+            <a th:href="@{/propiedadesBuscar}">
+                <strong>Propiedades</strong>
+                <span>Alta, baja, modificacion y consulta</span>
+            </a>
+            <a th:href="@{/publicacionesBuscar}">
+                <strong>Publicaciones</strong>
+                <span>Gestion de publicaciones activas</span>
+            </a>
+            <a th:href="@{/contratosBuscar}">
+                <strong>Contratos</strong>
+                <span>Administracion de alquileres</span>
+            </a>
+            <a th:href="@{/facturasBuscar}">
+                <strong>Facturas</strong>
+                <span>Consulta y registro de facturacion</span>
+            </a>
+        </section>
+    </main>
+
+</body>
+</html>
