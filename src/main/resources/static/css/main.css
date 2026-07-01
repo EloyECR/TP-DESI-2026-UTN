@@ -131,6 +131,7 @@ textarea {
 }
 
 button,
+.btn_clr,
 input[type="button"],
 input[type="submit"],
 input[type="reset"],
@@ -147,6 +148,7 @@ input[type="reset"],
 }
 
 button:hover,
+.btn_clr,
 input[type="button"]:hover,
 input[type="submit"]:hover,
 input[type="reset"]:hover,
