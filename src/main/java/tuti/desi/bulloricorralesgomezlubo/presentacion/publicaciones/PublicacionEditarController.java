@@ -106,9 +106,9 @@ public class PublicacionEditarController {
 			}
 		}
 
-		if (action.equals("Cancelar")) {
+		if (action.equals("Volver")) {
 			modelo.clear();
-			return "redirect:/publicacionesBuscar";
+			return "redirect:/";
 		}
 
 		return "redirect:/";

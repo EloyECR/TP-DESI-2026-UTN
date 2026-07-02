@@ -113,9 +113,9 @@ public class PropiedadEditarController {
 			}
 		}
 
-		if (action.equals("Cancelar")) {
+		if (action.equals("Volver")) {
 			modelo.clear();
-			return "redirect:/propiedadesBuscar";
+			return "redirect:/";
 		}
 
 		return "redirect:/";

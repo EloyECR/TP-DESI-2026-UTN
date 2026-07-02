@@ -64,8 +64,9 @@
         <table class="botones">
             <tr>
                 <td><input type="submit" value="Filtrar" /></td>
-                <td><input type="button" th:onclick="|window.location.href='@{/contratos}'|" value="Limpiar" /></td>
-                <td><input type="button" th:onclick="|window.location.href='@{/contratos/nuevo}'|" value="Nuevo Contrato" /></td>
+                <td><input type="submit" value="Limpiar" th:formaction="@{/contratos}" formmethod="get" /></td>
+                <td><input type="submit" value="Nuevo Contrato" th:formaction="@{/contratos/nuevo}" formmethod="get" /></td>
+                <td><input type="submit" value="Volver" th:formaction="@{/}" formmethod="get" /></td>
             </tr>
         </table>
 
@@ -81,7 +82,6 @@
                 <th><label>Vencimiento</label></th>
                 <th><label>Estado</label></th>
                 <th></th>
-                <th></th>
             </tr>
             </thead>
             <tbody>
@@ -96,8 +96,7 @@
                 <td th:text="${c.estado}"></td>
                 <td>
                     <a th:href="@{/contratos/actualizar/{id}(id=${c.id})}">Editar</a>
-                </td>
-                <td>
+                    <br/>
                     <button type="submit"
                             th:formaction="@{/contratos/eliminar/{id}(id=${c.id})}"
                             formmethod="get"

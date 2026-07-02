@@ -68,9 +68,14 @@ public class PublicacionesBuscarController {
 			return "publicacionesBuscar";
 		}
 
-		if (action.equals("Cancelar")) {
+		if (action.equals("Volver")) {
 			modelo.clear();
 			return "redirect:/";
+		}
+
+		if (action.equals("Limpiar")) {
+			modelo.clear();
+			return "redirect:/publicacionesBuscar";
 		}
 
 		if (action.equals("Registrar")) {

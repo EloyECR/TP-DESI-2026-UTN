@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title><span th:text="#{publicacion.buscar.titulo}"></span></title>
+    <title th:text="#{publicacion.buscar.titulo}"></title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <link rel="stylesheet" th:href="@{/css/main.css}"/>
 </head>
@@ -56,8 +56,9 @@
             <table class="botones">
                 <tr>
                     <td><input type="submit" name="action" value="Buscar" /></td>
-                    <td><input type="submit" name="action" value="Cancelar" /></td>
+                    <td><input type="submit" name="action" value="Limpiar" /></td>
                     <td><input type="submit" name="action" value="Registrar" /></td>
+                    <td><input type="submit" name="action" value="Volver" /></td>
                 </tr>
             </table>
 
@@ -71,7 +72,6 @@
                         <th><label th:text="#{publicacion.fechaPublicacion}"></label></th>
                         <th><label th:text="#{publicacion.estado}"></label></th>
                         <th></th>
-                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -84,8 +84,7 @@
                         <td th:text="${p.estado}"></td>
                         <td>
                             <a th:href="@{/publicacionEditar/{id}(id=${p.id})}" th:text="#{links.editar}"></a>
-                        </td>
-                        <td>
+                            <br/>
                             <button type="submit"
                                     th:formaction="@{/publicacionEditar/delete/{id}(id=${p.id})}"
                                     formmethod="post"

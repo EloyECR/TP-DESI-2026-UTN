@@ -105,6 +105,10 @@ table.resultados {
   border: 1px solid var(--color-borde);
 }
 
+.resultados-wrapper {
+  overflow-x: auto;
+}
+
 .resultados th,
 .resultados td {
   padding: 10px 12px;
@@ -156,8 +160,21 @@ input[type="reset"]:hover,
   background: var(--color-principal-oscuro);
 }
 
+table.botones {
+  width: 100%;
+}
+
 table.botones input {
   margin-right: 8px;
+}
+
+table.botones input:last-child {
+  margin-right: 0;
+}
+
+table.botones td:last-child {
+  width: 100%;
+  text-align: right;
 }
 
 .error {
